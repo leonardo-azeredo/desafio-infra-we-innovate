@@ -53,6 +53,4 @@ Siga os passos abaixo para executar o projeto:
 4.  Digite o seguinte comando para construir e iniciar os containers:
 
 ```
-    docker-compose up
-
-
+ docker-compose up
