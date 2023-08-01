@@ -26,7 +26,8 @@ O docker-compose.yml será para subir todos os containers juntos, na mesma rede,
 
 Segue abaixo o conteúdo do arquivo docker-compose.yml:
 
-    version: '3'
+````
+version: '3'
 
 services:
   mongo_server:
@@ -63,7 +64,7 @@ services:
 
 networks:
   weinnovate-net:
-
+````
 Para executar o projeto
 -----------------------
 
