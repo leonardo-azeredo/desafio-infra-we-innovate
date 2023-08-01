@@ -26,21 +26,43 @@ O docker-compose.yml será para subir todos os containers juntos, na mesma rede,
 
 Segue abaixo o conteúdo do arquivo docker-compose.yml:
 
-    version: '3.8'
-    
-    services:
-      app:
-        build:
-          context: .
-          dockerfile: Dockerfile
-        ports:
-          - "80:80"
-      nginx:
-        image: nginx:latest
-        volumes:
-          - ./nginx.conf:/etc/nginx/nginx.conf:ro
-        depends_on:
-          - app
+    version: '3'
+
+services:
+  mongo_server:
+    image: mongo:6.0.8
+    container_name: mongo_serverContainer
+    networks:
+      - weinnovate-net
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: weinnovate
+      MONGO_INITDB_ROOT_PASSWORD: weinnovate
+
+  app_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Container02
+    networks:
+      - weinnovate-net
+    depends_on:
+      - mongo_server
+
+  proxy_server:
+    image: nginx:1.25.1
+    container_name: Container03-proxy_serverContainer
+    networks:
+      - weinnovate-net
+    ports:
+      - "80:80"
+    depends_on:
+      - app_server
+      - mongo_server
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+networks:
+  weinnovate-net:
 
 Para executar o projeto
 -----------------------
